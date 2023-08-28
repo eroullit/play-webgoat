@@ -7,6 +7,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 
+import scala.util.Random
 import scala.concurrent.ExecutionContext
 import scala.sys.process._
 
@@ -287,10 +288,7 @@ object FormData {
 
       val errors = attackerInput match {
         case s: String if s.contains(" ") =>
-          // Error message contains attacker controlled input text
-          // Play takes a raw string here and escapes everything, but it may be possible to escape this...
-          Seq(ValidationError("error.invaliduser", attackerInput))
-
+          Seq.fill(16)(Random.nextInt())   // BUG: predictable random number generator
         case _ =>
           Nil
       }
