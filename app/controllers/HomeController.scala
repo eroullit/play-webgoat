@@ -174,6 +174,11 @@ class HomeController @Inject()(ws: WSClient, cc: MessagesControllerComponents)(i
     Ok(views.html.index(FormData.customForm))
   }
 
+  def generateSecretToken() = Action { implicit request =>
+    val result = Seq.fill(16)(Random.nextInt())   // BUG: predictable random number generator
+    Ok(result.map("%02x" format _).mkString)
+  }
+
   /**
    * XSS through custom constraint with user input
    */
