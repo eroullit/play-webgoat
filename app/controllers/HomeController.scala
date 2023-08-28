@@ -7,6 +7,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 
+import scala.util.Random
 import scala.concurrent.ExecutionContext
 import scala.sys.process._
 
@@ -172,6 +173,11 @@ class HomeController @Inject()(ws: WSClient, cc: MessagesControllerComponents)(i
   // Render a boring form
   def constraintForm = Action { implicit request  =>
     Ok(views.html.index(FormData.customForm))
+  }
+
+  def generateSecretToken() = Action { implicit request =>
+    val result = Seq.fill(16)(Random.nextInt())   // BUG: predictable random number generator
+    Ok(result.map("%02x" format _).mkString)
   }
 
   /**
