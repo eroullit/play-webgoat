@@ -7,6 +7,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 
+import scala.util.Random
 import scala.concurrent.ExecutionContext
 import scala.sys.process._
 
